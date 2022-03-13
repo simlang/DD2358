@@ -1,8 +1,8 @@
 # Raw Version
 ## Timings
 - Sizes: 100, 200, 300, 400, 500
-- Mean: [0.3053176529, 1.1735100068, 2.6189196003000004, 4.486683757700001, 7.680737046799999]
-- Stds: [0.022722410101413792, 0.10622469009917478, 0.12844472611358745, 0.017712468552313017, 0.5530108868502055]
+- Mean: [0.3053, 1.1735, 2.6189, 4.4866, 7.6807]
+- Stds: [0.0227, 0.1062, 0.1284, 0.0177, 0.5530]
 
 ## cProfile
 ```
@@ -262,4 +262,102 @@ Line #    Mem usage    Increment  Occurrences   Line Contents
      6                                         def normalize(x):
      7   74.820 MiB    0.020 MiB       20304       x /= np.linalg.norm(x)
      8   74.820 MiB    0.000 MiB       20304       return x
+```
+
+
+# Optimized Version
+
+## Timings
+- Sizes: 100, 200, 300, 400, 500
+- Mean: [0.1648, 0.6497, 1.4502, 2.6065, 4.0323]
+- Stds: [0.0081, 0.0063, 0.0146, 0.0238, 0.0280]
+
+
+## cProfile
+
+```
+
+         4030549 function calls (3862608 primitive calls) in 3.852 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.901    3.901 {built-in method builtins.exec}
+        1    0.001    0.001    3.901    3.901 <string>:1(<module>)
+        1    1.557    1.557    3.900    3.900 main.py:6(run)
+898448/730507    0.675    0.000    1.605    0.000 {built-in method numpy.core._multiarray_umath.implement_array_function}
+   166737    0.084    0.000    1.253    0.000 <__array_function__ internals>:2(norm)
+   166737    0.517    0.000    1.056    0.000 linalg.py:2363(norm)
+   730104    0.312    0.000    0.981    0.000 <__array_function__ internals>:2(dot)
+   327542    0.331    0.000    0.331    0.000 {built-in method numpy.array}
+        1    0.001    0.001    0.307    0.307 main.py:10(<listcomp>)
+   166736    0.106    0.000    0.106    0.000 {method 'ravel' of 'numpy.ndarray' objects}
+   166739    0.047    0.000    0.092    0.000 _asarray.py:14(asarray)
+   730104    0.084    0.000    0.084    0.000 multiarray.py:706(dot)
+   166736    0.040    0.000    0.058    0.000 linalg.py:112(isComplexType)
+   333473    0.040    0.000    0.040    0.000 {built-in method builtins.issubclass}
+      401    0.000    0.000    0.029    0.000 <__array_function__ internals>:2(linspace)
+      401    0.006    0.000    0.028    0.000 function_base.py:23(linspace)
+   166737    0.023    0.000    0.023    0.000 linalg.py:2359(_norm_dispatcher)
+      401    0.000    0.000    0.016    0.000 <__array_function__ internals>:2(any)
+      401    0.000    0.000    0.016    0.000 fromnumeric.py:2249(any)
+      401    0.013    0.000    0.015    0.000 fromnumeric.py:70(_wrapreduction)
+      402    0.005    0.000    0.005    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        1    0.000    0.000    0.004    0.004 <__array_function__ internals>:2(clip)
+        1    0.000    0.000    0.004    0.004 fromnumeric.py:2033(clip)
+        1    0.000    0.000    0.004    0.004 fromnumeric.py:52(_wrapfunc)
+        1    0.000    0.000    0.004    0.004 {method 'clip' of 'numpy.ndarray' objects}
+        1    0.000    0.000    0.004    0.004 _methods.py:106(_clip)
+      401    0.001    0.000    0.002    0.000 {method 'any' of 'numpy.generic' objects}
+        2    0.002    0.001    0.002    0.001 _methods.py:72(_clip_dep_is_scalar_nan)
+        1    0.002    0.002    0.002    0.002 _methods.py:87(_clip_dep_invoke_with_casting)
+      401    0.000    0.000    0.001    0.000 _methods.py:53(_any)
+      401    0.000    0.000    0.001    0.000 <__array_function__ internals>:2(result_type)
+      802    0.000    0.000    0.001    0.000 _asarray.py:86(asanyarray)
+      401    0.001    0.000    0.001    0.000 {built-in method numpy.arange}
+      403    0.000    0.000    0.001    0.000 <__array_function__ internals>:2(ndim)
+      401    0.000    0.000    0.000    0.000 {method 'astype' of 'numpy.ndarray' objects}
+      401    0.000    0.000    0.000    0.000 {method 'reshape' of 'numpy.ndarray' objects}
+      401    0.000    0.000    0.000    0.000 numeric.py:1816(isscalar)
+      401    0.000    0.000    0.000    0.000 fromnumeric.py:71(<dictcomp>)
+      403    0.000    0.000    0.000    0.000 fromnumeric.py:3075(ndim)
+      402    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+      404    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+      403    0.000    0.000    0.000    0.000 fromnumeric.py:3071(_ndim_dispatcher)
+      401    0.000    0.000    0.000    0.000 function_base.py:18(_linspace_dispatcher)
+      401    0.000    0.000    0.000    0.000 fromnumeric.py:2245(_any_dispatcher)
+      401    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+      401    0.000    0.000    0.000    0.000 {built-in method _operator.index}
+      401    0.000    0.000    0.000    0.000 multiarray.py:634(result_type)
+        1    0.000    0.000    0.000    0.000 {built-in method numpy.zeros}
+        1    0.000    0.000    0.000    0.000 {method 'conj' of 'numpy.ndarray' objects}
+        2    0.000    0.000    0.000    0.000 _methods.py:82(_clip_dep_is_byte_swapped)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        1    0.000    0.000    0.000    0.000 fromnumeric.py:2029(_clip_dispatcher)
+```
+
+## line_profiler
+### run
+```
+Total time: 4.48286 s
+File: main.py
+Function: run at line 6
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     6                                           @profile 
+     7                                           def run():
+     8         1         22.0     22.0      0.0      img = np.zeros((h, w, 3))
+     9                                               # Loop through all pixels.
+    10                                           
+    11         1     361326.0 361326.0      8.1      Q = np.array([[np.array([x, y, 0.]) for x in np.linspace(-1, 1, w)] for y in np.linspace(-1, 1, h)])
+    12         1       2873.0   2873.0      0.1      D = Q - O
+    13         1       6595.0   6595.0      0.1      D /= np.linalg.norm(D, axis=2, keepdims=True)
+    14                                           
+    15       401        395.0      1.0      0.0      for i, row in enumerate(D):
+    16    160400     139470.0      0.9      3.1          for j, d in enumerate(row):
+    17    160000    3970209.0     24.8     88.6              img[h - j - 1, i, :] = tracer.trace_ray(O, d)
+    18         1       1967.0   1967.0      0.0      img = np.clip(img, 0, 1)
+    19         1          2.0      2.0      0.0      return img
 ```
