@@ -2,10 +2,10 @@ import numpy as np
 from raytracing import *
 
 def run():
-    img = np.zeros((h, w, 3), dtype=np.float32)
+    img = np.zeros((h, w, 3))
     # Loop through all pixels.
 
-    Q = np.array([[np.array([x, y, 0.], dtype=np.float32) for x in np.linspace(-1, 1, w)] for y in np.linspace(-1, 1, h)])
+    Q = np.array([[np.array([x, y, 0.]) for x in np.linspace(-1, 1, w)] for y in np.linspace(-1, 1, h)])
     D = Q - O
     D /= np.linalg.norm(D, axis=2, keepdims=True)
 
@@ -19,21 +19,21 @@ def run():
 w, h = 400, 400
 
 # Sphere properties.
-position = np.array([0., 0., 1.], dtype=np.float32)
+position = np.array([0., 0., 1.])
 radius = 1.
-color = np.array([0., 0., 1.], dtype=np.float32)
+color = np.array([0., 0., 1.])
 diffuse = 1.
 specular_c = 1.
 specular_k = 50
 
 # Light position and color.
-L = np.array([5., 5., -10.], dtype=np.float32)
-color_light = np.ones(3, dtype=np.float32)
+L = np.array([5., 5., -10.])
+color_light = np.ones(3)
 ambient = .05
 
 # Camera.
-O = np.array([0., 0., -1.], dtype=np.float32)  # Position.
-Q = np.array([0., 0., 0.], dtype=np.float32)  # Pointing to.
+O = np.array([0., 0., -1.])  # Position.
+Q = np.array([0., 0., 0.])  # Pointing to.
 
 tracer = RayTracer(position, radius, L, ambient, diffuse, color, specular_c, color_light, specular_k)
 #cProfile.run("run()", "cProfileRaw")
